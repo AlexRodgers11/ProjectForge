@@ -2,8 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import organizationsRouter from "./routes/organizations.js";
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8081;
 const router = express.Router();
 
 dotenv.config();
@@ -26,7 +27,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", process.env.CLIENT_ORIGIN || "http://localhost:3000");
+    res.header("Access-Control-Allow-Origin", process.env.CLIENT_ORIGIN || "http://localhost:8080");
     res.header("Access-Control-Allow-Methods", "GET, PATCH, PUT, POST, DELETE");
     res.header(
         "Access-Control-Allow-Headers",
@@ -43,6 +44,8 @@ app.use(
 );
 
 app.use(router);
+
+app.use("/organizations", organizationsRouter);
 
 app.listen(port, () => {
     console.log(`Node.js listening on port ${port}`);
