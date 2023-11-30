@@ -8,6 +8,15 @@ const initialState = {
     formIdx: 0
 }
 
+export const fetchFMEAs = createAsyncThunk("fmeas/fetchFMEAs", async ({orgId}) => {
+    try {
+        const response = await axios.get(`${baseURL}/organizations/${orgId}/forms/fmea`);
+        return response.data;
+    } catch (err) {
+        console.error(err);
+    }
+});
+
 export const submitNewFMEAForm = createAsyncThunk("fmeas/submitNewFMEAForm", async ({orgId, newForm}) => {
     try {
         const response = await axios.post(`${baseURL}/organizations/${orgId}/forms/fmea`, newForm);
@@ -26,6 +35,10 @@ export const fmeasSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
+        builder.addCase(fetchFMEAs.fulfilled, (state, action) => {
+            state.fmeas = [...action.payload];
+            state.formIdx = 0;
+        }),
         builder.addCase(submitNewFMEAForm.fulfilled, (state, action) => {
             state.fmeas = [...state.fmeas, action.payload];
         });

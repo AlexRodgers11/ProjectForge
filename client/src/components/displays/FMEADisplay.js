@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useToggle from "../../hooks/useToggle";
 import FMEAForm from "../forms/FMEAForm";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFMEAs } from "../../reducers/fmeasSlice";
 
 export default function FMEADisplay() {
     const [showForm, toggleShowForm] = useToggle(true);
+    const fmeas = useSelector(state => state.fmeas.fmeas);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if(!fmeas.length) {
+            dispatch(fetchFMEAs({orgId: "656646641372dda7d05850ef"}));
+        }
+    }, [fmeas]);
     
     return (
         <div className="FMEA">
@@ -30,24 +40,26 @@ export default function FMEADisplay() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    {fmeas.length > 0 && fmeas.map(fmea => (
+                        <tr key={fmea._id}>
+                            <td>{fmea.step}</td>
+                            <td>{fmea.failureMode}</td>
+                            <td>{fmea.failureEffects}</td>
+                            <td>{fmea.severity}</td>
+                            <td>{fmea.causes}</td>
+                            <td>{fmea.occurence}</td>
+                            <td>{fmea.controls}</td>
+                            <td>{fmea.detection}</td>
+                            <td>{fmea.severity * fmea.occurence * fmea.detection}</td>
+                            <td>{fmea.recommendedAction}</td>
+                            <td>{fmea.responsibility}</td>
+                            <td>{fmea.actionsTaken}</td>
+                            <td>{fmea.updatedSeverity}</td>
+                            <td>{fmea.updatedOccurence}</td>
+                            <td>{fmea.updatedDetectance}</td>
+                            <td>{fmea.updatedSeverity * fmea.updatedOccurence * fmea.updatedDetectance}</td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>

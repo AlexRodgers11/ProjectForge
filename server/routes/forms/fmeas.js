@@ -10,7 +10,18 @@ fmeasRouter.post("/", async (req, res, next) => {
         await Organization.findByIdAndUpdate(req.organizationId, {$push: {"forms.fmeas": newFmea}});
         res.status(200).send(newFmea);
     } catch (err) {
-        res.status(500).send("There was an error with your request");
+        res.status(500).send(err.message);
+    }
+});
+
+fmeasRouter.get("/", async (req, res, next) => {
+    try {
+        console.log("fetching fmeas");
+        const foundOrganization = await Organization.findById(req.organizationId, "forms.fmeas").populate("forms.fmeas");
+        console.log({fmeasLength: foundOrganization.forms.fmeas.length});
+        res.status(200).send(foundOrganization.forms.fmeas);
+    } catch (err) {
+        res.status(500).send(err.message);
     }
 });
 
