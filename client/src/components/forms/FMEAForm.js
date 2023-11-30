@@ -8,11 +8,11 @@ export default function FMEAForm(props) {
     const [step, clearStep, handleStepChange, setStep] = useFormInput("");
     const [failureMode, clearFailureMode, handleFailureModeChange, setFailureMode] = useFormInput("");
     const [failureEffects, clearFailureEffects, handleFailureEffectsChange, setFailureEffects] = useFormInput("");
-    const [severity, clearSeverity, handleSeverityChange, setSeverity] = useFormInput();
+    const [severity, clearSeverity, handleSeverityChange, setSeverity] = useFormInput("");
     const [causes, clearCauses, handleCausesChange, setCauses] = useFormInput("");
-    const [occurence, clearOccurence, handleOccurenceChange, setOccurence] = useFormInput();
+    const [occurence, clearOccurence, handleOccurenceChange, setOccurence] = useFormInput("");
     const [controls, clearControls, handleControlsChange, setControls] = useFormInput("");
-    const [detection, clearDetection, handleDetectionChange, setDetection] = useFormInput();
+    const [detection, clearDetection, handleDetectionChange, setDetection] = useFormInput("");
     const [recommendedAction, clearRecommendedAction, handleRecommendedActionChange, setRecommendedAction] = useFormInput("");
     const [responsibility, clearResponsibility, handleResponsibilityChange, setResponsibility] = useFormInput("");
     const [actionsTaken, clearActionsTaken, handleActionsTakenChange, setActionsTaken] = useFormInput("");
