@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import useFormInput from "../../hooks/useFormInput";
+import useFormInput from "../../../hooks/useFormInput";
 import { useDispatch, useSelector } from "react-redux";
-import { submitNewFMEAForm, updateFormIdx } from "../../reducers/fmeasSlice";
-
+import { submitNewFMEAForm, updateFormIdx } from "../../../reducers/fmeasSlice";
+import "./FMEAForm.css";
 
 export default function FMEAForm(props) {
     const [step, clearStep, handleStepChange, setStep] = useFormInput("");

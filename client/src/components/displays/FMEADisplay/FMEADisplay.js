@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
-import useToggle from "../../hooks/useToggle";
-import FMEAForm from "../forms/FMEAForm";
+import useToggle from "../../../hooks/useToggle";
+import FMEAForm from "../../forms/FMEAForm/FMEAForm";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFMEAs } from "../../reducers/fmeasSlice";
+import { fetchFMEAs } from "../../../reducers/fmeasSlice";
+import "./FMEADisplay.css";
+import Modal from "../../Modal/Modal";
 
 export default function FMEADisplay() {
     const [showForm, toggleShowForm] = useToggle(true);
@@ -14,10 +16,15 @@ export default function FMEADisplay() {
             dispatch(fetchFMEAs({orgId: "656646641372dda7d05850ef"}));
         }
     }, [fmeas]);
+
+    const handleCreateFMEA = () => {
+        toggleShowForm();
+    }
     
     return (
         <div className="FMEA">
-            {showForm && <FMEAForm toggle={toggleShowForm}/>}
+            {showForm && <Modal hideModal={toggleShowForm}><FMEAForm toggle={toggleShowForm}/></Modal>}
+            {!showForm && <button onClick={handleCreateFMEA}>Create new FMEA</button>}
             <table>
                 <thead>
                     <tr>
