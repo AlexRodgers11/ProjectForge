@@ -1,0 +1,14 @@
+.FMEADisplay td {
+  text-align: center;
+}
+
+.FMEADisplay_Vertical {
+  writing-mode: vertical-lr;
+}
+
+.FMEADisplay_Hidden {
+  border: none;
+}
+.FMEADisplay_Close {
+  cursor: pointer;
+}

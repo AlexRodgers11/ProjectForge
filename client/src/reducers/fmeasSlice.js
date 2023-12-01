@@ -17,6 +17,15 @@ export const fetchFMEAs = createAsyncThunk("fmeas/fetchFMEAs", async ({orgId}) =
     }
 });
 
+export const deleteFMEA = createAsyncThunk("fmeas/deleteFMEA", async ({orgId, formId}) => {
+    try {
+        const response = await axios.delete(`${baseURL}/organizations/${orgId}/forms/fmea/${formId}`);
+        return response.data;
+    } catch (err) {
+        console.error(err);
+    }
+});
+
 export const submitNewFMEAForm = createAsyncThunk("fmeas/submitNewFMEAForm", async ({orgId, newForm}) => {
     try {
         const response = await axios.post(`${baseURL}/organizations/${orgId}/forms/fmea`, newForm);
@@ -35,6 +44,9 @@ export const fmeasSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
+        builder.addCase(deleteFMEA.fulfilled, (state, action) => {
+            state.fmeas = state.fmeas.filter(fmea => fmea._id !== action.payload);
+        });
         builder.addCase(fetchFMEAs.fulfilled, (state, action) => {
             state.fmeas = [...action.payload];
             state.formIdx = 0;

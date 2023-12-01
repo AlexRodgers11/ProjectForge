@@ -16,10 +16,18 @@ fmeasRouter.post("/", async (req, res, next) => {
 
 fmeasRouter.get("/", async (req, res, next) => {
     try {
-        console.log("fetching fmeas");
         const foundOrganization = await Organization.findById(req.organizationId, "forms.fmeas").populate("forms.fmeas");
-        console.log({fmeasLength: foundOrganization.forms.fmeas.length});
         res.status(200).send(foundOrganization.forms.fmeas);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+fmeasRouter.delete("/:formId", async (req, res, next) => {
+    try {
+        const deletedFMEA = await Fmea.findByIdAndDelete(req.params.formId);
+        await Organization.findByIdAndUpdate(req.organizationId, {$pull: {"forms.fmeas": req.params.formId}});
+        res.status(200).send(deletedFMEA._id);
     } catch (err) {
         res.status(500).send(err.message);
     }
